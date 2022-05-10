@@ -1,2 +1,2 @@
-# brightspace-email-scraper
- Get notifications of emails on D2L Brightspace
+# fol-email-scraper
+ Get notifications for new emails recieved on the FanshaweOnline platform
