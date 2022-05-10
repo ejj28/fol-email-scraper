@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 import configparser
-import time
 import traceback
 
 configuration = configparser.ConfigParser()
@@ -25,6 +25,8 @@ except KeyError:
     print("[Error] config.ini may be corrupt or missing necessary settings - please recreate it from the template")
     exit()
 
+def notify(subject):
+    pass
 
 with webdriver.Firefox() as driver:
 
@@ -48,5 +50,12 @@ with webdriver.Firefox() as driver:
 
     messages = emailTable.find_elements(By.XPATH, ".//*[contains(@class, 'd2l-link')]")
     
-    for i in messages:
-        print(i.get_attribute('id'), i.get_attribute('title'))
+    with open("db.txt", "a+") as dbFile:
+        dbFile.seek(0)
+        idList = dbFile.read().splitlines()
+        #print(idList)
+        for i in messages:
+            if i.get_attribute('id') not in idList:
+                notify(i.get_attribute('title'))
+                print(i.get_attribute('id'), i.get_attribute('title'))
+                dbFile.write(i.get_attribute('id') + "\n")
