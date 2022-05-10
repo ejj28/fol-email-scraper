@@ -214,3 +214,6 @@ $RECYCLE.BIN/
 .history/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Linux,macOS,Python,Windows,VisualStudioCode
+
+config.ini
+*.exe
