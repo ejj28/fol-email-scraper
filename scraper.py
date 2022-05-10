@@ -25,10 +25,6 @@ except KeyError:
     print("[Error] config.ini may be corrupt or missing necessary settings - please recreate it from the template")
     exit()
 
-except:
-    traceback.print_exc()
-    exit()
-
 
 with webdriver.Firefox() as driver:
 
@@ -43,4 +39,14 @@ with webdriver.Firefox() as driver:
     passElement.send_keys(d2lPassword)
     driver.find_element(By.NAME, "_eventId_proceed").click()
 
-    time.sleep(60)
+    waitTen.until(EC.title_is("Homepage - Fanshawe College"))
+    
+
+    driver.get("https://www.fanshaweonline.ca/d2l/lms/email/frame_list_mail.d2l?ou=29533&d2l_body_type=1&type=1&fk=0")
+    emailTable = waitTen.until(EC.presence_of_element_located((By.XPATH, "//table[@id='z_f']/tbody")))
+
+
+    messages = emailTable.find_elements(By.XPATH, ".//*[contains(@class, 'd2l-link')]")
+    
+    for i in messages:
+        print(i.get_attribute('id'), i.get_attribute('title'))
